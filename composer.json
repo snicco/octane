@@ -1,0 +1,53 @@
+{
+  "name": "sniccowp/octane",
+  "description": "Code-based WordPress Performance Optimization for Developers. No UI - Just screaming fast PHP. ",
+  "keywords": [
+    "WordPress",
+    "WordPress Performance",
+    "WordPress Performance Optimization"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "calvinalkan",
+      "email": "calvin@snicc.de"
+    }
+  ],
+  "require": {
+    "php": "^7.3"
+  },
+  "suggest": {
+    "nyholm/psr7": "If you want to take custom conditions to the next level."
+  },
+  "autoload": {
+    "psr-4": {
+      "Snicco\\Octane\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ocante\\Tests\\": "tests/",
+      "Snicco\\Octane\\": "src/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+    "nyholm/psr7": "^1.4",
+    "phpunit/phpunit": "^9.0",
+    "lucatume/wp-browser": "3.0.6",
+    "mockery/mockery": "^1.4.2"
+  },
+  "scripts": {
+    "unit": [
+      "Composer\\Config::disableProcessTimeout",
+      "vendor/bin/codecept run unit"
+    ]
+  }
+}

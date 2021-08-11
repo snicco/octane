@@ -1,0 +1,20 @@
+actor_suffix: Tester
+paths:
+  tests: tests
+  log: tests/_output
+  data: tests/_data
+  helpers: tests/_support
+settings:
+  colors: true
+params:
+  - .env.testing
+coverage:
+  enabled: true
+  show_uncovered: false
+  low_limit: 70
+  high_limit: 90
+  include:
+    - src/*
+
+
+
