@@ -155,10 +155,8 @@ class ScriptCleanUpTest extends WPTestCase
 			"https://ajax.googleapis.com/ajax/libs/jquery/$expected_version/jquery.min.js",
 			$html
 		);
-		$this->assertStringNotContainsString(
-			"/wp-includes/js/jquery/jquery.min.js?ver=$expected_version",
-			$html
-		);
+		
+		$this->assertStringNotContainsString("/wp-includes/js/jquery/jquery", $html);
 		
 	}
 	
@@ -178,10 +176,8 @@ class ScriptCleanUpTest extends WPTestCase
 			"https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js",
 			$header
 		);
-		$this->assertStringContainsString(
-			"/wp-includes/js/jquery/jquery.min.js?ver=$version",
-			$header
-		);
+		
+		$this->assertStringContainsString("/wp-includes/js/jquery/jquery", $header);
 		
 	}
 	
