@@ -90,5 +90,5 @@ jobs:
         run: vendor/bin/codecept build
 
       - name: Run unit tests
-        run: vendor/bin/codecept build --verbose
+        run: vendor/bin/codecept run unit --verbose
 
