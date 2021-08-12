@@ -15,7 +15,7 @@
     }
   ],
   "require": {
-    "php": "^7.1"
+    "php": "^7.2"
   },
   "suggest": {
     "nyholm/psr7": "If you want to take custom conditions to the next level."
