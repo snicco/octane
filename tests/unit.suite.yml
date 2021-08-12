@@ -2,7 +2,6 @@ actor: UnitTester
 modules:
   enabled:
     - WPLoader
-    - \Helper\Wpunit
   config:
     WPLoader:
       wpRootFolder: "%WP_ROOT_FOLDER%"

@@ -2,12 +2,12 @@
 
 namespace Ocante\Tests\unit;
 
-use PHPUnit\Framework\TestCase;
+use Codeception\TestCase\WPTestCase;
 use Snicco\Octane\Psr7ServerRequestAdapter;
 use Snicco\Octane\PhpSuperGlobalsRequestAdapter;
 use Ocante\Tests\unit\Concerns\AssetRemovalTestHelpers;
 
-class PhpSuperGlobalsRequestAdapterTest extends TestCase
+class PhpSuperGlobalsRequestAdapterTest extends WPTestCase
 {
 	
 	use AssetRemovalTestHelpers;

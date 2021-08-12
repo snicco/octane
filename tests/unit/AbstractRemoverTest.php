@@ -16,6 +16,9 @@ use function wp_enqueue_script;
 class AbstractRemoverTest extends WPTestCase
 {
 	
+	/** @var \UnitTester */
+	protected $tester;
+	
 	/** @test */
 	public function testCanBeConstructedWithoutPsr7Dependency()
 	{

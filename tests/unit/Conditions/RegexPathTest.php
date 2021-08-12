@@ -2,12 +2,12 @@
 
 namespace Ocante\Tests\unit\Conditions;
 
-use PHPUnit\Framework\TestCase;
+use Codeception\TestCase\WPTestCase;
 use Snicco\Octane\Conditions\RegexPath;
 use Snicco\Octane\Psr7ServerRequestAdapter;
 use Ocante\Tests\unit\Concerns\AssetRemovalTestHelpers;
 
-class RegexPathTest extends TestCase
+class RegexPathTest extends WPTestCase
 {
 	
 	use AssetRemovalTestHelpers;
