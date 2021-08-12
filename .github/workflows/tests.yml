@@ -46,7 +46,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: wp_octane
         ports:
-          - 3306:3306
+          - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -57,7 +57,7 @@ jobs:
       - name: Start mysql service
         run: |
           sudo /etc/init.d/mysql start
-      #          mysql --host=127.0.0.1 -u root -proot -e "create database IF NOT EXISTS ${{ env.DB_NAME }}";
+          mysql --host=127.0.0.1 -u root -proot -e "create database IF NOT EXISTS ${{ env.DB_NAME }}";
 
       - name: Setup PHP [${{ matrix.php_version }}]
         uses: shivammathur/setup-php@v2
