@@ -143,18 +143,20 @@ class ScriptCleanUpTest extends WPTestCase
 		
 		wp_enqueue_script('foo', '/foo.js', ['jquery']);
 		$version = wp_scripts()->registered['jquery']->ver;
+		$expected_version = str_replace(['-wp', 'wp'], '', $version);
 		
 		$this->newRemover()->jQueryCDN();
 		
 		$html = $this->printHead();
 		
 		$this->assertStringContainsString('/foo.js', $html);
+		
 		$this->assertStringContainsString(
-			"https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js",
+			"https://ajax.googleapis.com/ajax/libs/jquery/$expected_version/jquery.min.js",
 			$html
 		);
 		$this->assertStringNotContainsString(
-			"/wp-includes/js/jquery/jquery.min.js?ver=$version",
+			"/wp-includes/js/jquery/jquery.min.js?ver=$expected_version",
 			$html
 		);
 		
