@@ -1,0 +1,94 @@
+name: Tests
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - 'release/*'
+      - 'hotfix/*'
+
+  pull_request:
+    branches:
+      - develop
+      - main
+
+  workflow_dispatch:
+
+env:
+  WP_ROOT_FOLDER: /tmp/wordpress
+  DB_NAME: wp_octane
+  DB_USER: root
+  DB_PASSWORD: root
+  DB_PREFIX: wp_
+  WP_URL: http://octane.test
+  WP_DOMAIN: octance.test
+  WP_ADMIN_USERNAME: admin
+  WP_ADMIN_PASSWORD: admin
+
+
+jobs:
+
+  Tests:
+
+    name: Tests PHP Version[${{ matrix.php_version }}] + WP [${{ matrix.wp_version }}]
+
+    runs-on: ubuntu-18.04
+
+    strategy:
+      fail-fast: true
+      matrix:
+        #        php_version: [ '7.4','7.3']
+        #        wp_version: [ 'latest', '5.7', '5.6','5.5','5.4' ]
+        php_version: [ '7.4' ]
+        wp_version: [ 'latest' ]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: wp_octane
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start mysql service
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql --host=127.0.0.1 -u root -proot -e "create database IF NOT EXISTS ${{ env.DB_NAME }}";
+
+      - name: Setup PHP [${{ matrix.php_version }}]
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          tools: composer:v2, wp-cli,
+          coverage: false
+        env:
+          fail-fast: true
+
+      - name: Install composer dependencies
+        run: composer validate && composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Copy .env.testing
+        run: |
+          php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');"
+
+      - name: Install WordPress [${{ matrix.wp_version }}]
+        run: |
+          mkdir -p ${{env.WP_ROOT_FOLDER}} && cd ${{env.WP_ROOT_FOLDER}}
+          wp core download --version=${{ matrix.wp_version }}
+          wp config create --dbname="${{ env.DB_NAME }}" --dbuser="${{ env.DB_USER }}" --dbpass="${{ env.DB_PASSWORD }}" --dbhost="127.0.0.1" --dbprefix="${{ env.DB_USER }}"
+          wp core install --url="${{ env.WP_URL }}" --title="octane" --admin_user="${{env.WP_ADMIN_USERNAME}}" --admin_password="${{env.WP_ADMIN_PASSWORD}}" --admin_email="admin@${{env.WP_DOMAIN}}" --skip-email
+          wp rewrite structure '/%postname%/'
+          wp core update-db
+
+      - name: Build Codeception
+        run: vendor/bin/codecept build
+
+      - name: Run unit tests
+        run: vendor/bin/codecept build --verbose
+

@@ -2,12 +2,12 @@
 
 namespace Ocante\Tests\unit\Conditions;
 
-use PHPUnit\Framework\TestCase;
 use Snicco\Octane\Conditions\All;
+use Codeception\TestCase\WPTestCase;
 use Snicco\Octane\ServerRequestAdapter;
 use Snicco\Octane\Conditions\CallableCondition;
 
-class AllTest extends TestCase
+class AllTest extends WPTestCase
 {
 	
 	/** @test */

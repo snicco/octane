@@ -3,11 +3,11 @@
 namespace Ocante\Tests\unit\Conditions;
 
 use Nyholm\Psr7\ServerRequest;
-use PHPUnit\Framework\TestCase;
+use Codeception\TestCase\WPTestCase;
 use Snicco\Octane\Conditions\IsFrontend;
 use Snicco\Octane\Psr7ServerRequestAdapter;
 
-class IsFrontendTest extends TestCase
+class IsFrontendTest extends WPTestCase
 {
 	
 	/** @test */

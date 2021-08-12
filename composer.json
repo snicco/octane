@@ -15,7 +15,9 @@
     }
   ],
   "require": {
-    "php": "^7.3"
+    "php": "^7.3",
+    "codeception/module-phpbrowser": "^1.0.0",
+    "codeception/module-asserts": "^1.0.0"
   },
   "suggest": {
     "nyholm/psr7": "If you want to take custom conditions to the next level."

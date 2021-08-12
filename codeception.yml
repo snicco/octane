@@ -1,0 +1,13 @@
+actor_suffix: Tester
+paths:
+  tests: tests
+  log: tests/codeception/_output
+  data: tests/codeception/_data
+  helpers: tests/codeception/_support
+settings:
+  colors: true
+params:
+  - .env.testing
+
+
+
