@@ -5,10 +5,14 @@ namespace Ocante\Tests\unit\Conditions;
 use Snicco\Octane\Conditions\Any;
 use Codeception\TestCase\WPTestCase;
 use Snicco\Octane\ServerRequestAdapter;
+use Snicco\Octane\Psr7ServerRequestAdapter;
 use Snicco\Octane\Conditions\CallableCondition;
+use Ocante\Tests\unit\Concerns\AssetRemovalTestHelpers;
 
 class AnyTest extends WPTestCase
 {
+	
+	use AssetRemovalTestHelpers;
 	
 	/** @test */
 	public function testCanPassIfAllPass()
@@ -29,7 +33,7 @@ class AnyTest extends WPTestCase
 	
 	private function request() :ServerRequestAdapter
 	{
-		return \Mockery::mock(ServerRequestAdapter::class);
+		return new Psr7ServerRequestAdapter($this->serverRequest());
 	}
 	
 	/** @test */

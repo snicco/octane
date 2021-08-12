@@ -4,11 +4,14 @@ namespace Ocante\Tests\unit\Conditions;
 
 use Snicco\Octane\Conditions\All;
 use Codeception\TestCase\WPTestCase;
-use Snicco\Octane\ServerRequestAdapter;
+use Snicco\Octane\Psr7ServerRequestAdapter;
 use Snicco\Octane\Conditions\CallableCondition;
+use Ocante\Tests\unit\Concerns\AssetRemovalTestHelpers;
 
 class AllTest extends WPTestCase
 {
+	
+	use AssetRemovalTestHelpers;
 	
 	/** @test */
 	public function testCanPass()
@@ -23,14 +26,12 @@ class AllTest extends WPTestCase
 		});
 		
 		$and_condition = new All([$condition1, $condition2]);
-		$this->assertTrue($and_condition->passes($this->request()));
+		$this->assertTrue(
+			$and_condition->passes(new Psr7ServerRequestAdapter($this->serverRequest()))
+		);
 		
 	}
 	
-	private function request() :ServerRequestAdapter
-	{
-		return \Mockery::mock(ServerRequestAdapter::class);
-	}
 	
 	/** @test */
 	public function testFailsIfOneConditionFails()
@@ -45,7 +46,9 @@ class AllTest extends WPTestCase
 		});
 		
 		$and_condition = new All([$condition1, $condition2]);
-		$this->assertFalse($and_condition->passes($this->request()));
+		$this->assertFalse(
+			$and_condition->passes(new Psr7ServerRequestAdapter($this->serverRequest()))
+		);
 		
 	}
 	
