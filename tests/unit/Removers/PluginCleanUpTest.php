@@ -58,7 +58,7 @@ class PluginCleanUpTest extends WPTestCase
 	}
 	
 	/** @test */
-	public function testNothingBreaksIfPluginsWasAlreadyRemoved()
+	public function testNothingBreaksIfPluginsWasAlreadyRemovedOrInactive()
 	{
 		
 		$remover = $this->newRemover();
@@ -81,29 +81,6 @@ class PluginCleanUpTest extends WPTestCase
 		
 	}
 	
-	/** @test */
-	public function a_php_notice_gets_triggered_if_trying_to_remove_a_plugins_that_doesnt_exist()
-	{
-		
-		$remover = $this->newRemover();
-		$remover->remove('foobar/foobar.php');
-		
-		$error_function = function($errno, $errstr, $errfile, $errline, $errcontext) {
-			
-			$this->assertStringContainsString(
-				'Tried to remove plugin [foobar/foobar.php]',
-				$errstr
-			);
-			
-			$this->assertSame($errno, E_USER_NOTICE);
-			
-		};
-		
-		set_error_handler($error_function, E_USER_NOTICE);
-		
-		unset($remover);
-		
-	}
 	
 	protected function setUp() :void
 	{
