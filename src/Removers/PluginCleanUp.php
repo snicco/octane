@@ -36,18 +36,7 @@ class PluginCleanUp extends IDBased
 				
 				if( ($key = array_search($handle, $active_plugins, true)) !== false ) {
 					unset($active_plugins[$key]);
-					continue;
 				}
-				
-				// plugin was removed by some other filter.
-				if( (array_search($handle, $this->active_plugins, true)) !== false ) {
-					continue;
-				}
-				
-				trigger_error(
-					"Tried to remove plugin [$handle] but no matching plugin was found",
-					E_USER_NOTICE
-				);
 				
 			}
 			
